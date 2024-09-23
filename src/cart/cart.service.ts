@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { isObjectIdOrHexString, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { Cart, CartDocument, CartItem } from './cart.schema';
 import { User, UserDocument } from 'src/user/user.schema';
 import { NotificationService } from 'src/notification/notification.service';
-import { ObjectId } from 'mongoose';
+import { ObjectId } from 'mongodb';
+
 
 
 @Injectable()
@@ -76,7 +77,8 @@ export class CartService {
   }
 
   async checkout(userId: string): Promise<unknown> {
-    x <userId> = userId
+    //
+    const x: ObjectId = new ObjectId(userId);
     const user = await this.userModel.findById(x);
     const phoneNumber = user.phoneNumber;
     /*

@@ -5,6 +5,7 @@ import { CartService } from './cart.service';
 import { CartController } from './cart.controller';
 import { User, UserSchema } from '../user/user.schema'; // Adjust path as necessary
 import { Product, ProductSchema } from '../product/product.schema'; // Adjust path as necessary
+import { Order, OrderSchema } from 'src/order/order.schema';
 import { NotificationService } from 'src/notification/notification.service';
 
 @Module({
@@ -12,6 +13,7 @@ import { NotificationService } from 'src/notification/notification.service';
     MongooseModule.forFeature([{ name: Cart.name, schema: CartSchema }]),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
   ],
   controllers: [CartController],
   providers: [CartService, NotificationService],

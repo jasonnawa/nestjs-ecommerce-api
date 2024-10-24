@@ -1,9 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { SNS } from 'aws-sdk';
 import * as twilio from 'twilio';
 
 @Injectable()
 export class NotificationService {
+  constructor(private configService: ConfigService) {}
+
+  getACCOUNTSID(): string {
+    return this.configService.get<string>('ACCOUNT_SID');
+  }
+  getAUTHTOKEN(): string {
+    return this.configService.get<string>('AUTH_TOKEN');
+  }
+  getNUMBER(): string {
+    return this.configService.get<string>('TWILIO_NUMBER');
+  }
   //private sns: SNS;
   //private twilioClient: Twilio.Twilio;
 
@@ -25,14 +37,14 @@ export class NotificationService {
     // })
     // .promise();
     try {
-      const client = twilio(
-        'AC97672c9bb2fe2fba5f1777d5a41db8bf',
-        '2b432808eccad8538b93735007fe1c85',
-      );
+      const SID = this.getACCOUNTSID();
+      const AUTHTOKEN = this.getAUTHTOKEN();
+      const NUMBER = this.getNUMBER();
+      const client = twilio(SID, AUTHTOKEN);
       await client.messages
         .create({
           body: message,
-          from: '+18566662117', // Your Twilio number
+          from: NUMBER,
           to: phoneNumber,
         })
         .then((message: any) => {
